@@ -1,324 +1,682 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Will - Ton Coach IA sur WhatsApp</title>
-  <meta name="description" content="Apprends l'IA au quotidien avec Will, ton coach intelligent sur WhatsApp. 5 minutes par jour pour maitriser l'intelligence artificielle.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --green: #25D366;
-      --green-dark: #128C7E;
-      --dark: #0a0a0a;
-      --gray: #666;
-      --light: #f5f5f5;
-      --white: #fff;
-      --accent: #6C5CE7;
-    }
-    body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); line-height: 1.6; }
-    a { text-decoration: none; color: inherit; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will — Ton coach IA dans WhatsApp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAFAF7;
+  --bg-card: #FFFFFF;
+  --bg-dark: #0F0F0E;
+  --text: #1A1A18;
+  --text-muted: #6B6B66;
+  --text-light: #9C9C96;
+  --accent: #25D366;
+  --accent-dark: #1DA851;
+  --accent-soft: #E8F8EE;
+  --border: rgba(0,0,0,0.08);
+  --purple: #7C5CFC;
+  --purple-soft: #F0ECFE;
+  --coral: #E8553D;
+  --coral-soft: #FEF0EC;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
 
-    /* NAV */
-    nav { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid #eee; }
-    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 24px; font-weight: 800; color: var(--green-dark); }
-    .nav-cta { background: var(--green); color: white; padding: 10px 24px; border-radius: 50px; font-weight: 600; font-size: 14px; transition: transform 0.2s; }
-    .nav-cta:hover { transform: scale(1.05); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* HERO */
-    .hero { padding: 140px 24px 80px; text-align: center; background: linear-gradient(180deg, #f0fdf4 0%, #fff 100%); }
-    .hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
-    .hero h1 span { color: var(--green-dark); }
-    .hero p { font-size: 18px; color: var(--gray); max-width: 560px; margin: 0 auto 32px; }
-    .hero-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: white; padding: 16px 36px; border-radius: 50px; font-size: 18px; font-weight: 700; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(37,211,102,0.3); }
-    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(37,211,102,0.4); }
-    .hero-cta svg { width: 24px; height: 24px; }
-    .hero-sub { margin-top: 16px; font-size: 14px; color: #999; }
-    .hero-mockup { margin-top: 48px; max-width: 340px; margin-left: auto; margin-right: auto; }
-    .mockup-phone { background: #1a1a2e; border-radius: 28px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
-    .mockup-header { display: flex; align-items: center; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid #333; }
-    .mockup-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: white; }
-    .mockup-name { color: white; font-weight: 600; font-size: 15px; }
-    .mockup-status { color: #aaa; font-size: 12px; }
-    .mockup-messages { padding-top: 16px; display: flex; flex-direction: column; gap: 8px; }
-    .msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; font-size: 13px; line-height: 1.5; animation: fadeIn 0.5s ease; }
-    .msg-bot { background: #2d2d44; color: #e0e0e0; align-self: flex-start; border-bottom-left-radius: 4px; }
-    .msg-user { background: var(--green-dark); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(--bg);
+color: var(--text);
+-webkit-font-smoothing: antialiased;
+overflow-x: hidden;
+}
 
-    /* FEATURES */
-    .features { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-    .features h2 { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 12px; }
-    .features .subtitle { text-align: center; color: var(--gray); margin-bottom: 48px; font-size: 16px; }
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-    .feature-card { background: var(--light); border-radius: 16px; padding: 32px; transition: transform 0.2s; }
-    .feature-card:hover { transform: translateY(-4px); }
-    .feature-icon { font-size: 36px; margin-bottom: 16px; }
-    .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .feature-card p { color: var(--gray); font-size: 14px; }
+.serif { font-family: ‘Instrument Serif’, serif; }
 
-    /* HOW */
-    .how { padding: 80px 24px; background: var(--light); }
-    .how-inner { max-width: 800px; margin: 0 auto; }
-    .how h2 { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 48px; }
-    .steps { display: flex; flex-direction: column; gap: 32px; }
-    .step { display: flex; gap: 20px; align-items: flex-start; }
-    .step-num { width: 48px; height: 48px; border-radius: 50%; background: var(--green); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0; }
-    .step-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-    .step-content p { color: var(--gray); font-size: 15px; }
+/* NAV */
+nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+padding: 16px 32px;
+display: flex; align-items: center; justify-content: space-between;
+background: rgba(250,250,247,0.85);
+backdrop-filter: blur(20px);
+border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+font-family: ‘Instrument Serif’, serif;
+font-size: 28px;
+color: var(--text);
+text-decoration: none;
+letter-spacing: -0.5px;
+}
+.nav-cta {
+display: inline-flex; align-items: center; gap: 8px;
+background: var(--accent); color: #fff;
+padding: 10px 20px; border-radius: 50px;
+font-size: 14px; font-weight: 500;
+text-decoration: none; border: none; cursor: pointer;
+transition: transform 0.2s, background 0.2s;
+}
+.nav-cta:hover { background: var(--accent-dark); transform: scale(1.03); }
 
-    /* PRICING */
-    .pricing { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-    .pricing h2 { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 12px; }
-    .pricing .subtitle { text-align: center; color: var(--gray); margin-bottom: 48px; }
-    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
-    .price-card { border: 2px solid #eee; border-radius: 20px; padding: 32px; text-align: center; transition: transform 0.2s, border-color 0.2s; }
-    .price-card:hover { transform: translateY(-4px); }
-    .price-card.popular { border-color: var(--green); position: relative; }
-    .price-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--green); color: white; padding: 4px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; }
-    .price-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-    .price-amount { font-size: 40px; font-weight: 800; margin: 16px 0; }
-    .price-amount span { font-size: 16px; color: var(--gray); font-weight: 400; }
-    .price-features { list-style: none; text-align: left; margin: 24px 0; }
-    .price-features li { padding: 6px 0; font-size: 14px; color: #444; }
-    .price-features li::before { content: "â "; color: var(--green); font-weight: 700; }
-    .price-cta { display: block; width: 100%; padding: 14px; border-radius: 50px; font-size: 16px; font-weight: 600; border: none; cursor: pointer; transition: transform 0.2s; }
-    .price-cta-green { background: var(--green); color: white; }
-    .price-cta-outline { background: transparent; border: 2px solid var(--dark); color: var(--dark); }
-    .price-cta:hover { transform: scale(1.03); }
-    .price-note { text-align: center; margin-top: 24px; color: #999; font-size: 13px; }
+/* HERO */
+.hero {
+padding: 160px 32px 80px;
+max-width: 900px;
+margin: 0 auto;
+text-align: center;
+}
+.hero-pill {
+display: inline-flex; align-items: center; gap: 6px;
+background: var(--accent-soft); color: var(--accent-dark);
+padding: 6px 16px; border-radius: 50px;
+font-size: 13px; font-weight: 500;
+margin-bottom: 28px;
+animation: fadeUp 0.6s ease both;
+}
+.hero-pill .dot {
+width: 8px; height: 8px; border-radius: 50%;
+background: var(--accent);
+animation: pulse 2s ease infinite;
+}
+.hero h1 {
+font-family: ‘Instrument Serif’, serif;
+font-size: clamp(42px, 6vw, 72px);
+line-height: 1.05;
+letter-spacing: -2px;
+margin-bottom: 24px;
+animation: fadeUp 0.6s ease 0.1s both;
+}
+.hero h1 em {
+font-style: italic;
+color: var(--accent-dark);
+}
+.hero-sub {
+font-size: 18px;
+line-height: 1.7;
+color: var(--text-muted);
+max-width: 560px;
+margin: 0 auto 40px;
+animation: fadeUp 0.6s ease 0.2s both;
+}
+.hero-cta-group {
+display: flex; align-items: center; justify-content: center; gap: 16px;
+flex-wrap: wrap;
+animation: fadeUp 0.6s ease 0.3s both;
+}
+.cta-main {
+display: inline-flex; align-items: center; gap: 10px;
+background: var(--accent); color: #fff;
+padding: 16px 32px; border-radius: 50px;
+font-size: 16px; font-weight: 500;
+text-decoration: none; border: none; cursor: pointer;
+transition: transform 0.2s, box-shadow 0.2s;
+box-shadow: 0 4px 24px rgba(37,211,102,0.3);
+}
+.cta-main:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(37,211,102,0.4); }
+.cta-main svg { width: 22px; height: 22px; }
+.cta-secondary {
+font-size: 14px; color: var(--text-muted);
+text-decoration: none;
+padding: 16px 24px;
+border-radius: 50px;
+border: 1px solid var(--border);
+transition: border-color 0.2s;
+}
+.cta-secondary:hover { border-color: var(--text-muted); }
 
-    /* FAQ */
-    .faq { padding: 80px 24px; background: var(--light); }
-    .faq-inner { max-width: 700px; margin: 0 auto; }
-    .faq h2 { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 40px; }
-    .faq-item { border-bottom: 1px solid #ddd; }
-    .faq-q { padding: 20px 0; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-    .faq-q::after { content: "+"; font-size: 24px; color: var(--gray); transition: transform 0.3s; }
-    .faq-item.open .faq-q::after { transform: rotate(45deg); }
-    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; color: var(--gray); font-size: 15px; }
-    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
+/* SOCIAL PROOF BAR */
+.proof-bar {
+display: flex; justify-content: center; gap: 40px;
+padding: 24px 32px;
+margin: 0 auto;
+max-width: 700px;
+animation: fadeUp 0.6s ease 0.4s both;
+}
+.proof-item { text-align: center; }
+.proof-num { font-size: 22px; font-weight: 600; color: var(--text); display: block; }
+.proof-label { font-size: 12px; color: var(--text-light); margin-top: 2px; }
 
-    /* CTA */
-    .final-cta { padding: 80px 24px; text-align: center; background: linear-gradient(135deg, #128C7E, #25D366); color: white; }
-    .final-cta h2 { font-size: 36px; font-weight: 800; margin-bottom: 16px; }
-    .final-cta p { font-size: 18px; opacity: 0.9; margin-bottom: 32px; }
-    .final-cta-btn { display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--green-dark); padding: 16px 36px; border-radius: 50px; font-size: 18px; font-weight: 700; transition: transform 0.2s; }
-    .final-cta-btn:hover { transform: scale(1.05); }
+/* PHONE MOCKUP */
+.phone-section {
+padding: 60px 32px 80px;
+display: flex; justify-content: center;
+}
+.phone-frame {
+width: 340px;
+background: var(--bg-dark);
+border-radius: 40px;
+padding: 14px;
+box-shadow: 0 40px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.05) inset;
+animation: floatUp 0.8s ease 0.5s both;
+}
+.phone-screen {
+border-radius: 28px;
+overflow: hidden;
+background: #ECE5DD;
+}
+.wa-header {
+background: #075E54;
+padding: 14px 16px;
+display: flex; align-items: center; gap: 12px;
+}
+.wa-avatar {
+width: 38px; height: 38px; border-radius: 50%;
+background: linear-gradient(135deg, var(--accent), #1DA851);
+display: flex; align-items: center; justify-content: center;
+font-weight: 600; font-size: 15px; color: #fff;
+letter-spacing: -0.5px;
+}
+.wa-name { color: #fff; font-size: 15px; font-weight: 500; }
+.wa-status { color: rgba(255,255,255,0.65); font-size: 11px; margin-top: 1px; }
+.wa-chat {
+padding: 14px;
+display: flex; flex-direction: column; gap: 6px;
+min-height: 400px;
+}
+.msg {
+max-width: 82%; padding: 8px 12px;
+border-radius: 12px; font-size: 13px; line-height: 1.55;
+position: relative;
+}
+.msg-bot {
+background: #fff; align-self: flex-start;
+border-top-left-radius: 4px;
+color: #111;
+box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.msg-user {
+background: #DCF8C6; align-self: flex-end;
+border-top-right-radius: 4px;
+color: #111;
+}
+.msg b { font-weight: 600; }
+.msg-time {
+font-size: 10px; color: rgba(0,0,0,0.35);
+text-align: right; margin-top: 3px;
+}
+.msg-gap { height: 4px; }
 
-    /* FOOTER */
-    footer { padding: 40px 24px; text-align: center; color: #999; font-size: 13px; }
-    footer a { color: var(--green-dark); }
+/* HOW IT WORKS */
+.how-section {
+padding: 80px 32px;
+max-width: 900px;
+margin: 0 auto;
+}
+.section-label {
+font-size: 13px; font-weight: 500;
+color: var(--accent-dark); letter-spacing: 1px;
+text-transform: uppercase;
+margin-bottom: 12px;
+}
+.section-title {
+font-family: ‘Instrument Serif’, serif;
+font-size: clamp(32px, 4vw, 48px);
+line-height: 1.1;
+letter-spacing: -1.5px;
+margin-bottom: 48px;
+}
+.steps {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 20px;
+}
+.step {
+background: var(--bg-card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 28px 24px;
+transition: transform 0.3s, box-shadow 0.3s;
+}
+.step:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
+.step-num {
+font-family: ‘Instrument Serif’, serif;
+font-size: 42px; color: var(--accent);
+line-height: 1; margin-bottom: 16px;
+}
+.step-title {
+font-size: 17px; font-weight: 600;
+margin-bottom: 8px; color: var(--text);
+}
+.step-desc {
+font-size: 14px; line-height: 1.65;
+color: var(--text-muted);
+}
 
-    @media (max-width: 600px) {
-      .pricing-grid { grid-template-columns: 1fr; }
-      .features-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+/* FEATURES */
+.features-section {
+padding: 80px 32px;
+max-width: 900px;
+margin: 0 auto;
+}
+.features-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 16px;
+}
+.feature {
+background: var(--bg-card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 28px 24px;
+transition: transform 0.3s;
+}
+.feature:hover { transform: translateY(-3px); }
+.feature-icon {
+width: 44px; height: 44px; border-radius: 12px;
+display: flex; align-items: center; justify-content: center;
+font-size: 20px; margin-bottom: 16px;
+}
+.feature-title {
+font-size: 16px; font-weight: 600;
+margin-bottom: 6px;
+}
+.feature-desc {
+font-size: 14px; line-height: 1.6;
+color: var(--text-muted);
+}
+
+/* PRICING */
+.pricing-section {
+padding: 80px 32px;
+max-width: 960px;
+margin: 0 auto;
+}
+.pricing-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 16px;
+align-items: start;
+max-width: 700px;
+margin: 0 auto;
+}
+.plan {
+background: var(--bg-card);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 32px 28px;
+transition: transform 0.3s, box-shadow 0.3s;
+}
+.plan:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.06); }
+.plan.featured {
+border: 2px solid var(--accent);
+position: relative;
+}
+.plan-pop {
+position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+background: var(--accent); color: #fff;
+font-size: 11px; font-weight: 600;
+padding: 4px 14px; border-radius: 50px;
+white-space: nowrap;
+}
+.plan-tag {
+display: inline-block; font-size: 11px; font-weight: 600;
+padding: 4px 10px; border-radius: 6px;
+margin-bottom: 14px;
+}
+.tag-green { background: var(--accent-soft); color: var(--accent-dark); }
+.tag-purple { background: var(--purple-soft); color: var(--purple); }
+.tag-coral { background: var(--coral-soft); color: var(--coral); }
+.plan-name {
+font-size: 20px; font-weight: 600;
+margin-bottom: 4px;
+}
+.plan-audience {
+font-size: 13px; color: var(--text-light);
+margin-bottom: 20px;
+}
+.plan-price {
+font-family: ‘Instrument Serif’, serif;
+font-size: 40px;
+letter-spacing: -1px;
+line-height: 1;
+}
+.plan-per {
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px; color: var(--text-muted);
+}
+.plan-price-note {
+font-size: 12px; color: var(--text-light);
+margin-top: 4px; margin-bottom: 24px;
+}
+.plan-features {
+border-top: 1px solid var(--border);
+padding-top: 20px;
+display: flex; flex-direction: column; gap: 10px;
+}
+.plan-feat {
+font-size: 14px; color: var(--text-muted);
+display: flex; align-items: flex-start; gap: 8px;
+line-height: 1.5;
+}
+.plan-feat .ck {
+width: 18px; height: 18px; border-radius: 50%;
+background: var(--accent-soft);
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0; margin-top: 2px;
+}
+.plan-feat .ck svg { width: 10px; height: 10px; }
+.plan-cta {
+display: block; text-align: center;
+margin-top: 24px; padding: 14px;
+border-radius: 12px; font-size: 14px; font-weight: 600;
+text-decoration: none; cursor: pointer;
+transition: transform 0.2s, opacity 0.2s;
+border: none; width: 100%;
+}
+.plan-cta:hover { transform: scale(1.02); }
+.plan-cta-main { background: var(--accent); color: #fff; }
+.plan-cta-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+.plan-cta-outline:hover { border-color: var(--text-muted); }
+
+/* FAQ */
+.faq-section {
+padding: 80px 32px;
+max-width: 700px;
+margin: 0 auto;
+}
+.faq-item {
+border-bottom: 1px solid var(--border);
+padding: 20px 0;
+cursor: pointer;
+}
+.faq-q {
+font-size: 16px; font-weight: 500;
+display: flex; justify-content: space-between; align-items: center;
+gap: 16px;
+}
+.faq-q span { transition: transform 0.3s; display: inline-block; color: var(--text-light); }
+.faq-a {
+max-height: 0; overflow: hidden;
+transition: max-height 0.4s ease, padding 0.3s;
+font-size: 14px; line-height: 1.7;
+color: var(--text-muted);
+}
+.faq-item.open .faq-a { max-height: 200px; padding-top: 12px; }
+.faq-item.open .faq-q span { transform: rotate(45deg); }
+
+/* FINAL CTA */
+.final-cta {
+padding: 80px 32px 100px;
+text-align: center;
+max-width: 700px;
+margin: 0 auto;
+}
+.final-cta h2 {
+font-family: ‘Instrument Serif’, serif;
+font-size: clamp(32px, 4vw, 48px);
+letter-spacing: -1.5px;
+line-height: 1.1;
+margin-bottom: 16px;
+}
+.final-cta p {
+font-size: 16px; color: var(--text-muted);
+margin-bottom: 32px; line-height: 1.7;
+}
+
+/* FOOTER */
+footer {
+padding: 32px;
+text-align: center;
+font-size: 13px;
+color: var(--text-light);
+border-top: 1px solid var(--border);
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatUp {
+from { opacity: 0; transform: translateY(40px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.4; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+.steps, .features-grid, .pricing-grid { grid-template-columns: 1fr; }
+.hero { padding: 130px 20px 60px; }
+.proof-bar { gap: 24px; }
+nav { padding: 14px 20px; }
+.phone-frame { width: 300px; }
+}
+</style>
+
 </head>
 <body>
 
-  <nav>
-    <div class="nav-inner">
-      <div class="logo">Will</div>
-      <a href="https://wa.me/TONWHATSAPPID?text=Salut%20Will%20!" class="nav-cta" id="nav-wa">Essayer gratuitement</a>
-    </div>
-  </nav>
+<nav>
+  <a href="#" class="nav-logo">Will</a>
+  <a href="#pricing" class="nav-cta">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.77.46 3.45 1.32 4.9L2 22l5.23-1.28C8.68 21.56 10.3 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm.02 18c-1.52 0-2.97-.4-4.23-1.14l-.3-.18-3.12.76.8-3-.2-.32A7.96 7.96 0 014.02 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z"/></svg>
+    Essayer gratuitement
+  </a>
+</nav>
 
-  <section class="hero">
-    <h1>Apprends l'IA<br>avec <span>Will</span> sur WhatsApp</h1>
-    <p>Ton coach IA personnel. 5 minutes par jour pour maitriser l'intelligence artificielle, directement sur WhatsApp.</p>
-    <a href="https://wa.me/TONWHATSAPPID?text=Salut%20Will%20!" class="hero-cta" id="hero-wa">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.336 0-4.512-.726-6.313-1.961l-.44-.311-2.645.887.887-2.645-.311-.44C1.726 16.512 1 14.336 1 12 1 5.935 5.935 1 12 1s11 4.935 11 11-4.935 11-11 11z"/></svg>
-      Commencer gratuitement
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-pill"><span class="dot"></span> Disponible maintenant sur WhatsApp</div>
+  <h1>Maîtrise l'IA<br>avant <em>tout le monde.</em></h1>
+  <p class="hero-sub">Will est ton coach IA personnel. Chaque jour, il t'envoie les meilleurs outils, tutos et astuces directement dans WhatsApp. Apprends à ton rythme, pour 10× moins cher qu'une formation.</p>
+  <div class="hero-cta-group">
+    <a href="#" class="cta-main">
+      <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.77.46 3.45 1.32 4.9L2 22l5.23-1.28C8.68 21.56 10.3 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm.02 18c-1.52 0-2.97-.4-4.23-1.14l-.3-.18-3.12.76.8-3-.2-.32A7.96 7.96 0 014.02 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z"/></svg>
+      Commencer sur WhatsApp
     </a>
-    <p class="hero-sub">7 jours d'essai gratuit - Aucune carte requise</p>
+    <a href="#how" class="cta-secondary">Comment ça marche ?</a>
+  </div>
+</section>
 
-    <div class="hero-mockup">
-      <div class="mockup-phone">
-        <div class="mockup-header">
-          <div class="mockup-avatar">W</div>
-          <div>
-            <div class="mockup-name">Will - Coach IA</div>
-            <div class="mockup-status">en ligne</div>
-          </div>
-        </div>
-        <div class="mockup-messages">
-          <div class="msg msg-bot">Salut ! Je suis Will, ton coach IA. Pret a apprendre quelque chose d'incroyable aujourd'hui ?</div>
-          <div class="msg msg-user" style="animation-delay: 0.3s">C'est quoi un prompt ?</div>
-          <div class="msg msg-bot" style="animation-delay: 0.6s">Un prompt, c'est l'instruction que tu donnes a une IA. Plus il est precis, meilleur sera le resultat ! Tu veux que je te montre la methode ROLE+CONTEXTE+TACHE ?</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<div class="proof-bar">
+  <div class="proof-item"><span class="proof-num">7 jours</span><span class="proof-label">d'essai gratuit</span></div>
+  <div class="proof-item"><span class="proof-num">2 min</span><span class="proof-label">par jour suffisent</span></div>
+  <div class="proof-item"><span class="proof-num">0 app</span><span class="proof-label">à télécharger</span></div>
+</div>
 
-  <section class="features">
-    <h2>Pourquoi Will ?</h2>
-    <p class="subtitle">L'IA est partout. Will t'aide a la comprendre et l'utiliser au quotidien.</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">ð¬</div>
-        <h3>Sur WhatsApp</h3>
-        <p>Pas d'app a telecharger. Will est la ou tu es deja, directement dans WhatsApp.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">ð§ </div>
-        <h3>Adapte a ton niveau</h3>
-        <p>Debutant, intermediaire ou avance â Will s'adapte a toi et ta progression.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">ð</div>
-        <h3>Contenu quotidien</h3>
-        <p>Chaque matin, recois un outil, un tuto ou un defi IA adapte a ton profil.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">ð</div>
-        <h3>Recherche en temps reel</h3>
-        <p>Will cherche les dernieres infos IA sur le web pour des reponses toujours a jour.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">â¡</div>
-        <h3>Reponses instantanees</h3>
-        <p>Pose n'importe quelle question sur l'IA et obtiens une reponse claire en secondes.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">ð¯</div>
-        <h3>Conseils personnalises</h3>
-        <p>Will connait ton metier et te propose des cas d'usage IA concrets pour toi.</p>
-      </div>
-    </div>
-  </section>
+<!-- PHONE MOCKUP -->
 
-  <section class="how">
-    <div class="how-inner">
-      <h2>Comment ca marche ?</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-content">
-            <h3>Envoie "Salut" a Will sur WhatsApp</h3>
-            <p>Clique sur le bouton et demarre une conversation avec Will.</p>
-          </div>
+<section class="phone-section">
+  <div class="phone-frame">
+    <div class="phone-screen">
+      <div class="wa-header">
+        <div class="wa-avatar">W</div>
+        <div><div class="wa-name">Will — Ton coach IA</div><div class="wa-status">en ligne</div></div>
+      </div>
+      <div class="wa-chat">
+        <div class="msg msg-bot">
+          <b>Bonjour Thomas ! 👋</b><br>
+          C'est mardi, jour tuto. Aujourd'hui on apprend à créer un agent IA qui répond à tes emails automatiquement.<br><br>
+          Ça prend 15 min et ça te fait gagner 2h/semaine. On y va ?
+          <div class="msg-time">08:32</div>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-content">
-            <h3>Dis-lui ton niveau et ton metier</h3>
-            <p>Will personnalise tout : contenu, difficulte, exemples concrets.</p>
-          </div>
+        <div class="msg-gap"></div>
+        <div class="msg msg-user">
+          Trop bien ! Vas-y explique moi 🔥
+          <div class="msg-time">08:45</div>
         </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-content">
-            <h3>Apprends chaque jour</h3>
-            <p>Recois du contenu chaque matin et pose tes questions quand tu veux.</p>
-          </div>
+        <div class="msg-gap"></div>
+        <div class="msg msg-bot">
+          <b>Étape 1 : Crée un compte sur Make.com</b><br>
+          C'est gratuit, tu as 1000 opérations/mois. Connecte ton Gmail dans les intégrations.<br><br>
+          Dis-moi quand c'est fait et je te guide pour l'étape 2 ✅
+          <div class="msg-time">08:45</div>
+        </div>
+        <div class="msg-gap"></div>
+        <div class="msg msg-user">
+          C'est fait ! J'ai connecté mon Gmail
+          <div class="msg-time">08:52</div>
+        </div>
+        <div class="msg-gap"></div>
+        <div class="msg msg-bot">
+          Bravo ! 🎉 Tu viens d'automatiser tes emails en 20 min. Demain je te montre comment faire la même chose pour tes DMs LinkedIn.
+          <div class="msg-time">09:10</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="pricing" id="offres">
-    <h2>Nos offres</h2>
-    <p class="subtitle">Commence gratuitement, evolue quand tu veux.</p>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <h3>Essai gratuit</h3>
-        <div class="price-amount">0â¬</div>
-        <ul class="price-features">
-          <li>7 jours d'essai</li>
-          <li>5 messages par jour</li>
-          <li>Contenu quotidien</li>
-          <li>Recherche web</li>
-        </ul>
-        <a href="https://wa.me/TONWHATSAPPID?text=Salut%20Will%20!" class="price-cta price-cta-outline">Essayer gratuitement</a>
-      </div>
-      <div class="price-card popular">
-        <div class="price-badge">Populaire</div>
-        <h3>Pro</h3>
-        <div class="price-amount">7,99â¬<span>/mois</span></div>
-        <ul class="price-features">
-          <li>40 messages par jour</li>
-          <li>Contenu quotidien</li>
-          <li>Recherche web</li>
-          <li>Support prioritaire</li>
-        </ul>
-        <button class="price-cta price-cta-green" onclick="window.open('https://wa.me/TONWHATSAPPID?text=Salut%20Will%20!','_blank')">Commencer</button>
-      </div>
-      <div class="price-card">
-        <h3>Max</h3>
-        <div class="price-amount">11,99â¬<span>/mois</span></div>
-        <ul class="price-features">
-          <li>Messages illimites</li>
-          <li>Contenu quotidien</li>
-          <li>Recherche web</li>
-          <li>Support prioritaire</li>
-          <li>Acces anticipÃ© nouvelles features</li>
-        </ul>
-        <button class="price-cta price-cta-outline" onclick="window.open('https://wa.me/TONWHATSAPPID?text=Salut%20Will%20!','_blank')">Commencer</button>
-      </div>
+<!-- HOW IT WORKS -->
+
+<section class="how-section" id="how">
+  <p class="section-label">Comment ça marche</p>
+  <h2 class="section-title">Trois étapes, zéro friction.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-title">Inscris-toi en 30 secondes</div>
+      <div class="step-desc">Choisis ton plan, connecte ton WhatsApp. Will te demande ton niveau et ton domaine pour personnaliser ton parcours.</div>
     </div>
-    <p class="price-note">Sans engagement. Annulable a tout moment. Paiement securise par Stripe.</p>
-  </section>
-
-  <section class="faq">
-    <div class="faq-inner">
-      <h2>Questions frequentes</h2>
-      <div class="faq-item">
-        <div class="faq-q">C'est quoi Will exactement ?</div>
-        <div class="faq-a">Will est un coach IA sur WhatsApp qui t'apprend l'intelligence artificielle au quotidien. Tu peux lui poser des questions, recevoir du contenu chaque matin, et progresser a ton rythme.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Comment ca marche techniquement ?</div>
-        <div class="faq-a">Will utilise l'IA la plus avancee pour comprendre tes questions et te repondre de facon claire et pedagogique. Il peut aussi chercher des informations en temps reel sur le web.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Est-ce que mes donnees sont protegees ?</div>
-        <div class="faq-a">Oui, absolument. Tes conversations restent privees et ne sont jamais partagees. Les paiements sont securises par Stripe.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Je peux annuler quand je veux ?</div>
-        <div class="faq-a">Oui, tous nos plans sont sans engagement. Tu peux annuler a tout moment directement depuis WhatsApp en ecrivant a Will.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Ca marche sur quel telephone ?</div>
-        <div class="faq-a">Will fonctionne sur tous les telephones qui ont WhatsApp : iPhone, Android, et meme WhatsApp Web sur ordinateur.</div>
-      </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-title">Reçois ton message chaque matin</div>
+      <div class="step-desc">Un outil IA à découvrir, un tuto pas-à-pas, un défi pratique. Tout est adapté à ton profil et à ce qui est nouveau cette semaine.</div>
     </div>
-  </section>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-title">Pose tes questions, progresse</div>
+      <div class="step-desc">Will est disponible 24/7. Demande-lui d'expliquer un concept, de comparer des outils, ou de t'aider à automatiser une tâche concrète.</div>
+    </div>
+  </div>
+</section>
 
-  <section class="final-cta">
-    <h2>Pret a maitriser l'IA ?</h2>
-    <p>Rejoins Will et apprends l'intelligence artificielle en 5 minutes par jour.</p>
-    <a href="https://wa.me/TONWHATSAPPID?text=Salut%20Will%20!" class="final-cta-btn">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.336 0-4.512-.726-6.313-1.961l-.44-.311-2.645.887.887-2.645-.311-.44C1.726 16.512 1 14.336 1 12 1 5.935 5.935 1 12 1s11 4.935 11 11-4.935 11-11 11z"/></svg>
-      Commencer avec Will
-    </a>
-  </section>
+<!-- FEATURES -->
 
-  <footer>
-    <p>&copy; 2026 Will - Coach IA. Tous droits reserves. | <a href="mailto:support@will-ai.fr">Contact</a></p>
-  </footer>
+<section class="features-section">
+  <p class="section-label">Ce que Will fait pour toi</p>
+  <h2 class="section-title">Ton expert IA, toujours dans ta poche.</h2>
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon" style="background: var(--accent-soft); color: var(--accent-dark);">⚡</div>
+      <div class="feature-title">Veille quotidienne</div>
+      <div class="feature-desc">Les meilleurs outils et actus IA, filtrés et expliqués pour toi. Fini de scroller Twitter pour rester à jour.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background: var(--purple-soft); color: var(--purple);">🎯</div>
+      <div class="feature-title">Tutos interactifs</div>
+      <div class="feature-desc">Des guides pas-à-pas directement dans le chat. Tu apprends en faisant, pas en regardant des vidéos de 2 heures.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background: var(--coral-soft); color: var(--coral);">💬</div>
+      <div class="feature-title">Expert 24/7</div>
+      <div class="feature-desc">Pose n'importe quelle question sur l'IA. Will t'explique simplement, avec des exemples concrets adaptés à ton métier.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background: #FEF7E0; color: #B8860B;">🏆</div>
+      <div class="feature-title">Défis pratiques</div>
+      <div class="feature-desc">Chaque semaine, un challenge concret pour appliquer ce que tu apprends. Automatise une tâche, crée un workflow, impressionne ton boss.</div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    // FAQ toggle
-    document.querySelectorAll('.faq-item').forEach(item => {
-      item.querySelector('.faq-q').addEventListener('click', () => {
-        item.classList.toggle('open');
-      });
-    });
+<!-- PRICING -->
 
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-  </script>
+<section class="pricing-section" id="pricing">
+  <p class="section-label">Tarifs</p>
+  <h2 class="section-title">Un plan pour chaque ambition.</h2>
+  <div class="pricing-grid">
+    <div class="plan">
+      <span class="plan-tag tag-green">Étudiant / Freelance</span>
+      <div class="plan-name">Étudiant</div>
+      <div class="plan-audience">Étudiants, freelances, curieux</div>
+      <div class="plan-price">4,99€<span class="plan-per"> / mois</span></div>
+      <div class="plan-price-note">7 jours d'essai gratuit</div>
+      <div class="plan-features">
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>Message proactif chaque matin</div>
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>Outil IA du jour + mini-tuto</div>
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>40 messages libres / jour</div>
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>Défi pratique hebdomadaire</div>
+      </div>
+      <a href="#" class="plan-cta plan-cta-outline">Commencer gratuitement</a>
+    </div>
+
+    <div class="plan featured">
+      <span class="plan-pop">Le plus populaire</span>
+      <span class="plan-tag tag-purple">Pro</span>
+      <div class="plan-name">Pro</div>
+      <div class="plan-audience">Indépendants, salariés, cadres</div>
+      <div class="plan-price">7,99€<span class="plan-per"> / mois</span></div>
+      <div class="plan-price-note">7 jours d'essai gratuit</div>
+      <div class="plan-features">
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>Tout Étudiant inclus</div>
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>Messages illimités</div>
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>Tutos interactifs pas-à-pas</div>
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>Veille hebdo personnalisée par métier</div>
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>Bibliothèque de prompts</div>
+        <div class="plan-feat"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="#1DA851" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span>Réponses prioritaires</div>
+      </div>
+      <a href="#" class="plan-cta plan-cta-main">Commencer gratuitement</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+
+<section class="faq-section" id="faq">
+  <p class="section-label">Questions fréquentes</p>
+  <h2 class="section-title">Tout ce que tu veux savoir.</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">C'est quoi la différence avec ChatGPT ?<span>+</span></div>
+    <div class="faq-a">ChatGPT attend que tu viennes. Will vient à toi. Chaque matin, il t'envoie du contenu curé et personnalisé : les meilleurs outils IA, des tutos pratiques, des défis concrets. C'est la différence entre un dictionnaire et un prof particulier.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Je suis débutant, c'est pour moi ?<span>+</span></div>
+    <div class="faq-a">Absolument. Will s'adapte à ton niveau. À l'inscription, tu choisis débutant, intermédiaire ou avancé, et le contenu suit. Pas de jargon incompréhensible — tout est expliqué simplement.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Combien de temps ça prend par jour ?<span>+</span></div>
+    <div class="faq-a">2 à 5 minutes pour lire le message du matin. Après, c'est toi qui décides : tu peux approfondir avec des questions, suivre un tuto de 15 min, ou juste lire et passer à ta journée.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Je peux annuler quand je veux ?<span>+</span></div>
+    <div class="faq-a">Oui, sans engagement. Tu peux annuler en un message directement dans WhatsApp. Pas de piège, pas de frais cachés.</div>
+  </div>
+  
+</section>
+
+<!-- FINAL CTA -->
+
+<section class="final-cta">
+  <h2>Prêt à devenir <span class="serif" style="font-style:italic; color: var(--accent-dark);">inarrêtable</span> ?</h2>
+  <p>Rejoins Will et apprends l'IA en 2 minutes par jour, directement dans WhatsApp. 7 jours gratuits, sans engagement.</p>
+  <a href="#" class="cta-main">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.77.46 3.45 1.32 4.9L2 22l5.23-1.28C8.68 21.56 10.3 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm.02 18c-1.52 0-2.97-.4-4.23-1.14l-.3-.18-3.12.76.8-3-.2-.32A7.96 7.96 0 014.02 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z"/></svg>
+    Commencer sur WhatsApp
+  </a>
+</section>
+
+<footer>
+  Will &copy; 2026 — Ton coach IA personnel sur WhatsApp.
+</footer>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => {
+    item.classList.toggle('open');
+  });
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
 
 </body>
 </html>
